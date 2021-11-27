@@ -1,22 +1,20 @@
 <%--
   Created by IntelliJ IDEA.
   User: cjjc2
-  Date: 2021-11-15
-  Time: 8:35 p.m.
+  Date: 2021-05-23
+  Time: 10:58 p.m.
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
 <html>
 <head>
+    <title>Category Page</title>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-
-    <title>My page</title>
     <style>
         h1 {
             text-align:center;
@@ -29,11 +27,15 @@
             width: 100%;
         }
 
+
     </style>
 </head>
-
-
+<body>
 <h1>Item Category</h1>
+<script>
+    document.getElementById("mes").innerHTML = "";
+</script>
+
 
 <div class="container">
 
@@ -47,44 +49,71 @@
             <input type="text" name="catdesc" class="form-control" id="cdesc" value="${desc}">
         </div>
 
+
+
+
+
         <a class="btn btn-success" href="add-todo">Add</a>
+
 
 
     </form>
 
+    <h1 id="mes">${errorMessage}</h1>
     <div class="container2">
-    <h2>Categories</h2>
+        <h2>Categories</h2>
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Category Code</th>
-            <th>Category Description</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        <c:forEach items="${todos}" var="todo">
+        <table class="table table-striped">
+            <thead>
             <tr>
-                <td>${todo.catcode}</td>
-                <td>${todo.catdesc}</td>
-
-                <td>    <a type="button" class="btn btn-primary" onmouseover="function2()"
-                           href="update-todo?id=${todo.catcode}" >Edit</a> </td>
-
-                <td>    <a type="button" class="btn btn-primary" onClick="return confirm('Are you sure you want to delete the record ?')"   id="p"
-                           href="delete-todo?id=${todo.catcode}"  >Delete</a>
-
-                <td>
-
+                <th>Category Code</th>
+                <th>Category Description</th>
             </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+
+            <c:forEach items="${todos}" var="todo">
+
+
+
+                <tr>
+
+
+                    <td>${todo.catcode}</td>
+                    <td>${todo.catdesc}</td>
+
+                    <td>    <a type="button" class="btn btn-primary"
+                               href="update-todo?id=${todo.catcode}" >Edit</a> </td>
+
+
+
+                    <td>    <a type="button" class="btn btn-primary"
+                               href="delete-todo?id=${todo.catcode}" >Delete</a> </td>
+
+
+
+                    <td>    <a type="button" class="btn btn-primary" onmouseout="myFunction()"
+                               href="see-todo?id=${todo.catcode}" >Items</a> </td>
+
+
+                </tr>
+
+
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+
 </div>
-</div>
-<
+
+<script>
+
+    function myFunction() {
+
+        document.getElementById("mes").innerHTML = "";
+    }
+
+</script>
+
+</body>
 </html>
-
-
-
