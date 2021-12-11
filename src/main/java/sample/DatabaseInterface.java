@@ -1,14 +1,13 @@
 package sample;
 
+
+
 import java.sql.SQLException;
 import java.util.List;
 
 public interface DatabaseInterface {
-
-
-    public void add(Category cat) throws ClassNotFoundException, SQLException;
-    public Category edit(Category cat, String catcode) throws SQLException, ClassNotFoundException;
-    public void delete(String catcode) throws SQLException;
-    public List<Category> display() throws ClassNotFoundException, SQLException;
-
+    public void add(savingstable data) throws ClassNotFoundException, SQLException;
+    public savingstable edit(savingstable data, String custno) throws SQLException, ClassNotFoundException;
+    public void delete(String custno) throws SQLException;
+    public List<savingstable> display() throws ClassNotFoundException, SQLException;
 }

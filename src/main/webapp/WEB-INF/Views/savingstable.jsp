@@ -9,7 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-    <title>Category Page</title>
+    <title>savingstable Page</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -31,7 +31,7 @@
     </style>
 </head>
 <body>
-<h1>Item Category</h1>
+<h1>Item savingstable</h1>
 <script>
     document.getElementById("mes").innerHTML = "";
 </script>
@@ -41,13 +41,26 @@
 
     <form method="GET">
         <div class="form-group">
-            <label for="ccode">Category Code:</label>
-            <input type="text" name="catcode" class="form-control" id="ccode" value="${id}">
+            <label for="custno">custno:</label>
+            <input type="text" name="custno" class="form-control" id="custno" value="${custno}">
         </div>
         <div class="form-group">
-            <label for="cdesc">Description:</label>
-            <input type="text" name="catdesc" class="form-control" id="cdesc" value="${desc}">
+            <label for="custname">Description:</label>
+            <input type="text" name="custname" class="form-control" id="custname" value="${custname}">
         </div>
+        <div class="form-group">
+            <label for="cdep">Description:</label>
+            <input type="number" name="cdep" class="form-control" id="cdep" value="${cdep}">
+        </div>
+        <div class="form-group">
+            <label for="nyears">Description:</label>
+            <input type="number" name="nyears" class="form-control" id="nyears" value="${nyears}">
+        </div>
+        <div class="form-group">
+            <label for="savtype">Description:</label>
+            <input type="text" name="savtype" class="form-control" id="savtype" value="${savtype}">
+        </div>
+
 
 
 
@@ -61,13 +74,13 @@
 
     <h1 id="mes">${errorMessage}</h1>
     <div class="container2">
-        <h2>Categories</h2>
+        <h2>savingstable</h2>
 
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Category Code</th>
-                <th>Category Description</th>
+                <th>custno</th>
+                <th>savingstable Description</th>
             </tr>
             </thead>
             <tbody>
@@ -79,21 +92,24 @@
                 <tr>
 
 
-                    <td>${todo.catcode}</td>
-                    <td>${todo.catdesc}</td>
+                    <td>${todo.custno}</td>
+                    <td>${todo.custname}</td>
+                    <td>${todo.cdep}</td>
+                    <td>${todo.nyears}</td>
+                    <td>${todo.savtype}</td>
 
                     <td>    <a type="button" class="btn btn-primary"
-                               href="update-todo?id=${todo.catcode}" >Edit</a> </td>
+                               href="update-todo?id=${todo.custno}" >Edit</a> </td>
 
 
 
                     <td>    <a type="button" class="btn btn-primary"
-                               href="delete-todo?id=${todo.catcode}" >Delete</a> </td>
+                               href="delete-todo?id=${todo.custno}" >Delete</a> </td>
 
 
 
                     <td>    <a type="button" class="btn btn-primary" onmouseout="myFunction()"
-                               href="see-todo?id=${todo.catcode}" >Items</a> </td>
+                               href="see-todo?id=${todo.custno}" >Items</a> </td>
 
 
                 </tr>

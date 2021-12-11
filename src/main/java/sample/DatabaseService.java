@@ -9,74 +9,89 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseService implements DatabaseInterface {
-
-    Connection con;
+public class DatabaseService implements DatabaseInterface{
+    java.sql.Connection con;
 
     public DatabaseService(Connection con) {
         this.con = con;
     }
 
     @Override
-    public void add(Category cat) throws ClassNotFoundException, SQLException {
-
-
-
-        String quer1 = "INSERT INTO category VALUES ( ?, ? )";
+    public void add(savingstable data) throws ClassNotFoundException, SQLException {
+        String quer1 = "INSERT INTO savingstable VALUES ( ?, ?, ?, ?, ?)";
         PreparedStatement query = con.prepareStatement(quer1);
 
 
-        query.setString(1, cat.getCatcode());
-        query.setString(2, cat.getCatdesc());
+        query.setString(1, data.getCustno());
+        query.setString(2, data.getCustname());
+        query.setDouble(3, data.getCdep());
+        query.setInt(4, data.getNyears());
+        query.setString(5, data.getSavtype());
 
 
 
         query.executeUpdate();
-
-
-
-
-
     }
 
     @Override
-    public Category edit(Category cat, String catcode) throws SQLException, ClassNotFoundException {
-
+    public savingstable edit(savingstable data, String custno) throws SQLException, ClassNotFoundException {
         PreparedStatement query;
-        query = con.prepareStatement("Update category set catcode=?, catdesc=? where catcode = ?");
-        query.setString(1, cat.getCatcode());
-        query.setString(2, cat.getCatdesc());
-        query.setString(3, catcode);
+        query = con.prepareStatement("Update savingstable set custno=?, custname=?, cdep=?,nyears=?,savtype=? where custno = ?");
+        query.setString(1, data.getCustno());
+        query.setString(2, data.getCustname());
+        query.setDouble(3, data.getCdep());
+        query.setInt(4, data.getNyears());
+        query.setString(5, data.getSavtype());
+        query.setString(6, custno);
 
         query.executeUpdate();
 
 
 
 
-        return cat;
+        return data;
 
     }
 
     @Override
-    public void delete(String catcode) throws SQLException {
-
-        String quer1 = "Delete from Category where catcode = ?";
+    public void delete(String custno) throws SQLException {
+        String quer1 = "Delete from savingstable where custno = ?";
         PreparedStatement query = con.prepareStatement(quer1);
-        query.setString(1, catcode);
+        query.setString(1, custno);
         query.executeUpdate();
-
-
 
     }
 
+    @Override
+    public List<savingstable> display() throws ClassNotFoundException, SQLException {
+        List<savingstable> savingstableList = new ArrayList<savingstable>();
 
-    public Category search(String catcode) throws SQLException,ClassNotFoundException {
-
-
-
-        String quer1 = "Select * from category where catcode = ?";
+        String quer1 = "Select * from savingstable";
         PreparedStatement query = con.prepareStatement(quer1);
-        query.setString(1, catcode);
+        ResultSet rs = query.executeQuery();
+
+        savingstable obj1;
+
+
+
+        while (rs.next()) {
+
+            obj1 = new savingstable(rs.getString("custno"), rs.getString("custname"),rs.getDouble("cdep"),rs.getInt("nyears"),rs.getString("savtype"));
+
+            savingstableList.add(obj1);
+        }
+
+
+        return savingstableList;
+    }
+
+    public savingstable search(String custno) throws SQLException,ClassNotFoundException {
+
+
+
+        String quer1 = "Select * from savingstable where custno = ?";
+        PreparedStatement query = con.prepareStatement(quer1);
+        query.setString(1, custno);
 
 
 
@@ -91,12 +106,12 @@ public class DatabaseService implements DatabaseInterface {
         }
 
 
-        Category obj1=null;
+        savingstable obj1=null;
 
 
 
 
-        obj1 = new Category(rs.getString("catcode"), rs.getString("catdesc"));
+        obj1 = new savingstable(rs.getString("custno"), rs.getString("custname"),rs.getDouble("cdep"),rs.getInt("nyears"),rs.getString("savtype"));
 
         return obj1;
 
@@ -106,55 +121,23 @@ public class DatabaseService implements DatabaseInterface {
 
 
     }
+    public List<Items> display2(String custno) throws ClassNotFoundException, SQLException {
 
-
-
-    @Override
-    public List<Category> display() throws ClassNotFoundException, SQLException {
-        //create an array list that will contain the data recovered
-        List<Category> Catlist = new ArrayList<Category>();
-
-        String quer1 = "Select * from category";
-        PreparedStatement query = con.prepareStatement(quer1);
-        ResultSet rs = query.executeQuery();
-
-        Category obj1;
-
-        //display records if there is data;
-
-        while (rs.next()) {
-
-            obj1 = new Category(rs.getString("catcode"), rs.getString("catdesc"));
-
-            Catlist.add(obj1);
-        }
-
-
-        return Catlist;
-
-
-
-    }
-
-
-
-    public List<Items> display2(String catcode) throws ClassNotFoundException, SQLException {
-        //create an array list that will contain the data recovered
         List<Items> Itemlist = new ArrayList<Items>();
 
-        String quer1 = "Select itemcode,itemdesc from items where catcode=?";
+        String quer1 = "Select itemcustno,itemcustname,itemcdep,itemnyears,itemnyears,itemsavtype from items where custno=?";
         PreparedStatement query = con.prepareStatement(quer1);
-        query.setString(1, catcode);
+        query.setString(1, custno);
         ResultSet rs = query.executeQuery();
 
         Items obj2;
 
-        //display records if there is data;
+
 
         while (rs.next()) {
 
 
-            obj2 = new Items(rs.getString("itemcode"),rs.getString("itemdesc"));
+            obj2 = new Items(rs.getString("itemcustno"),rs.getString("itemcustname"),rs.getDouble("itemcdep"),rs.getInt("itemnyears"),rs.getString("itemsavtype"));
 
 
 
